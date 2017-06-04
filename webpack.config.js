@@ -8,7 +8,7 @@ let entryPoint = null;
 let plugins = [];
 let output = null;
 let external = {
-    "jquery": "jQuery"
+    "jquery": "$"
 };
 
 if (env === 'dev' || env === 'build') {
