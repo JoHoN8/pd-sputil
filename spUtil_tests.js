@@ -7,12 +7,12 @@ or function name and false if fails
 */
 
 import * as spu from './src/library.js';
-import * as $ from 'jquery';
+import * as jquery from 'jquery';
 
-
+jquery.noConflict();
 
 const testProcess = (function() {
-    
+    var $ = jquery;
     var objProto = {
         test_profileProps: function() {
 
@@ -158,7 +158,7 @@ const testProcess = (function() {
             }).fail(() => {
                 console.log("sessionStorage", false);
             });
-            
+
         },
         test_loadSPScript: function() {
 

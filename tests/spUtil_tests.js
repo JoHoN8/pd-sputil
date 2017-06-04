@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = $;
+module.exports = jQuery;
 
 /***/ }),
 /* 1 */
@@ -91,7 +91,7 @@ var spu = _interopRequireWildcard(_library);
 
 var _jquery = __webpack_require__(0);
 
-var $ = _interopRequireWildcard(_jquery);
+var jquery = _interopRequireWildcard(_jquery);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -103,8 +103,10 @@ each test will run and log the function name and true if passes
 or function name and false if fails
 */
 
-var testProcess = function () {
+jquery.noConflict();
 
+var testProcess = function () {
+    var $ = jquery;
     var objProto = {
         test_profileProps: function test_profileProps() {
 
