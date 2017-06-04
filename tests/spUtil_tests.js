@@ -70,13 +70,13 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = pdsputil;
+module.exports = jQuery;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
+module.exports = pdsputil;
 
 /***/ }),
 /* 2 */
@@ -85,11 +85,11 @@ module.exports = undefined;
 "use strict";
 
 
-var _library = __webpack_require__(0);
+var _library = __webpack_require__(1);
 
 var spu = _interopRequireWildcard(_library);
 
-var _jquery = __webpack_require__(1);
+var _jquery = __webpack_require__(0);
 
 var $ = _interopRequireWildcard(_jquery);
 
