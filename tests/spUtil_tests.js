@@ -100,7 +100,7 @@ var $ = __webpack_require__(0); /*
                            or function name and false if fails
                            */
 
-jquery.noConflict();
+$.noConflict();
 
 var testProcess = function () {
     var objProto = {

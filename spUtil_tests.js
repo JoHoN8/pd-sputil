@@ -10,7 +10,7 @@ import * as spu from './src/library.js';
 // import * as jquery from 'jquery';
 var $ = require('jquery');
 
-jquery.noConflict();
+$.noConflict();
 
 const testProcess = (function() {
     var objProto = {
