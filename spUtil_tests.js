@@ -156,9 +156,9 @@ const testProcess = (function() {
             return spu.waitForScriptsReady("SP.js")
             .then(() => {
 
-                console.log("sessionStorage", true);
+                console.log("waitForScriptsReady", true);
             }).fail(() => {
-                console.log("sessionStorage", false);
+                console.log("waitForScriptsReady", false);
             });
 
         },
@@ -167,9 +167,9 @@ const testProcess = (function() {
             return spu.loadSPScript("sp.taxonomy.js")
             .then(() => {
 
-                console.log("sessionStorage", true);
+                console.log("loadSPScirpt", true);
             }).fail(() => {
-                console.log("sessionStorage", false);
+                console.log("loadSPScirpt", false);
             });
         },
         // test_spGotoUrl: function() {},

@@ -246,18 +246,18 @@ var testProcess = function () {
 
             return spu.waitForScriptsReady("SP.js").then(function () {
 
-                console.log("sessionStorage", true);
+                console.log("waitForScriptsReady", true);
             }).fail(function () {
-                console.log("sessionStorage", false);
+                console.log("waitForScriptsReady", false);
             });
         },
         test_loadSPScript: function test_loadSPScript() {
 
             return spu.loadSPScript("sp.taxonomy.js").then(function () {
 
-                console.log("sessionStorage", true);
+                console.log("loadSPScirpt", true);
             }).fail(function () {
-                console.log("sessionStorage", false);
+                console.log("loadSPScirpt", false);
             });
         },
         // test_spGotoUrl: function() {},
