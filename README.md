@@ -16,7 +16,7 @@ Depends of jQuery, but it not included in the build.
 
 ## Tests
 
-to do
+spUtil_tests.js
 
 ## Contributors
 
