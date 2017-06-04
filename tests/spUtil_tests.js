@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = library;
+module.exports = pdsputil;
 
 /***/ }),
 /* 1 */
