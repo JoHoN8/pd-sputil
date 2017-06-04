@@ -8,12 +8,7 @@ let entryPoint = null;
 let plugins = [];
 let output = null;
 let external = {
-    "jquery": {
-        commonjs: 'jquery',
-        commonjs2: 'jquery',
-        amd: 'jquery',
-        root: '$'
-    }
+    "jquery": "jQuery"
 };
 
 if (env === 'dev' || env === 'build') {
@@ -34,7 +29,7 @@ if(env === 'test') {
         path: path.resolve(__dirname, "./tests"),
         filename: "spUtil_tests.js",
     };
-    external['./src/library.js'] = "library";
+    external['./src/library.js'] = "pdsputil";
 }
 
 module.exports = {

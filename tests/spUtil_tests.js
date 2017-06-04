@@ -63,73 +63,225 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = library;
+module.exports = jQuery;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = pdsputil;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _library = __webpack_require__(0);
+var _library = __webpack_require__(1);
 
 var spu = _interopRequireWildcard(_library);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var testProcess = function () {
+// import * as jquery from 'jquery';
+var $ = __webpack_require__(0); /*
+                           tests for spUtil.js
+                           6/1/17
+                           
+                           each test will run and log the function name and true if passes
+                           or function name and false if fails
+                           */
 
+$.noConflict();
+
+var testProcess = function () {
     var objProto = {
         test_profileProps: function test_profileProps() {
 
-            var type = Array.isArray(this.spu.profileProps);
+            var type = Array.isArray(spu.profileProps);
             if (type === true) {
                 console.log("profileProps", true);
             }
+            return this;
         },
-        test_getDataType: function test_getDataType() {},
-        test_elementTagName: function test_elementTagName() {},
-        test_argsConverter: function test_argsConverter() {},
-        test_arrayInsertAtIndex: function test_arrayInsertAtIndex() {},
-        test_arrayRemoveAtIndex: function test_arrayRemoveAtIndex() {},
-        test_encodeAccountName: function test_encodeAccountName() {},
-        test_getPageInfo: function test_getPageInfo() {},
-        test_spGotoUrl: function test_spGotoUrl() {},
-        test_hideRibbon: function test_hideRibbon() {},
-        test_URLparameters: function test_URLparameters() {},
-        test_sesStorage: function test_sesStorage() {},
-        test_sublish: function test_sublish() {},
-        test_waitForScriptsReady: function test_waitForScriptsReady() {},
-        test_tableRowLoop: function test_tableRowLoop() {},
-        test_promiseDelay: function test_promiseDelay() {},
-        test_exportToCSV: function test_exportToCSV() {},
-        test_loadSPScript: function test_loadSPScript() {},
+        test_getDataType: function test_getDataType() {
+
+            var ary = [];
+            var type = spu.getDataType(ary);
+
+            if (type === 'array') {
+                console.log("getDataType", true);
+            } else {
+                console.log("getDataType", false);
+            }
+            return this;
+        },
+        test_elementTagName: function test_elementTagName() {
+
+            var ele = $("<div/>");
+            var tagName = spu.elementTagName(ele);
+
+            if (tagName === 'div') {
+                console.log("elementTagName", true);
+            } else {
+                console.log("elementTagName", false);
+            }
+            return this;
+        },
+        test_argsConverter: function test_argsConverter() {
+            var result = spu.argsConverter(arguments, 1);
+
+            if (Array.isArray(result) && result.length > 0) {
+                console.log("argsConverter", true);
+            } else {
+                console.log("argsConverter", false);
+            }
+            return this;
+        },
+        test_arrayInsertAtIndex: function test_arrayInsertAtIndex() {
+
+            var ary = [1, 2, 3, 5];
+            spu.arrayInsertAtIndex(ary, 3, 4);
+
+            if (ary[3] === 4) {
+                console.log("arrayInsertAtIndex", true);
+            } else {
+                console.log("arrayInsertAtIndex", false);
+            }
+            return this;
+        },
+        test_arrayRemoveAtIndex: function test_arrayRemoveAtIndex() {
+
+            var ary = [1, 2, 3, 4, 5];
+            spu.arrayRemoveAtIndex(ary, 1);
+
+            if (ary[1] !== 2) {
+                console.log("arrayRemoveAtIndex", true);
+            } else {
+                console.log("arrayRemoveAtIndex", false);
+            }
+            return this;
+        },
+        test_encodeAccountName: function test_encodeAccountName() {
+
+            var acctName = spu.encodeAccountName("kjkfjdk@deghi.com");
+
+            if (acctName) {
+                console.log("encodeAccountName", true);
+            } else {
+                console.log("encodeAccountName", false);
+            }
+            return this;
+        },
+        test_getPageInfo: function test_getPageInfo() {
+
+            var data = spu.getPageInfo();
+
+            if (data) {
+                console.log("getPageInfo", true);
+            } else {
+                console.log("getPageInfo", false);
+            }
+            return this;
+        },
+        test_hideRibbon: function test_hideRibbon() {
+
+            spu.domReady(function () {
+                spu.hideRibbon();
+            });
+            return this;
+        },
+        test_URLparameters: function test_URLparameters() {
+
+            var data = spu.URLparameters();
+
+            if (Object.keys(data).length > 0) {
+                console.log("urlParams", true);
+            } else {
+                console.log("urlParams", false);
+            }
+            return this;
+        },
+        test_sesStorage: function test_sesStorage() {
+
+            var obj = new spu.sesStorage();
+
+            obj.setItem("stuff", 33);
+            var data = obj.getItem("stuff");
+
+            if (data === 33) {
+                console.log("sessionStorage", true);
+            } else {
+                console.log("sessionStorage", false);
+            }
+            return this;
+        },
+        test_sublish: function test_sublish() {
+
+            var obj = new spu.sublish();
+            var val = void 0;
+
+            obj.subscribe('33', function (num) {
+                val = num;
+            });
+
+            obj.publish('33', 70);
+
+            if (val === 70) {
+                console.log("sublish", true);
+            } else {
+                console.log("sublish", false);
+            }
+            return this;
+        },
+        test_waitForScriptsReady: function test_waitForScriptsReady() {
+
+            return spu.waitForScriptsReady("SP.js").then(function () {
+
+                console.log("waitForScriptsReady", true);
+            }).fail(function () {
+                console.log("waitForScriptsReady", false);
+            });
+        },
+        test_loadSPScript: function test_loadSPScript() {
+
+            return spu.loadSPScript("sp.taxonomy.js").then(function () {
+
+                console.log("loadSPScirpt", true);
+            }).fail(function () {
+                console.log("loadSPScirpt", false);
+            });
+        },
+        // test_spGotoUrl: function() {},
+        // test_tableRowLoop: function() {},
+        // test_promiseDelay: function() {},
+        // test_exportToCSV: function() {},
         init: function init() {
 
-            this.test_profileProps();
+            var self = this;
+
+            this.test_profileProps().test_getDataType().test_elementTagName().test_argsConverter("11", "22", "33").test_arrayInsertAtIndex().test_arrayRemoveAtIndex().test_encodeAccountName().test_hideRibbon().test_URLparameters().test_sesStorage().test_sublish().test_waitForScriptsReady().then(function () {
+                self.test_loadSPScript();
+                self.test_getPageInfo();
+            });
         }
     };
 
     return function () {
         var obj = Object.create(objProto);
-        obj.spu = pdsputil;
         return obj;
     };
-}(); /*
-     tests for spUtil.js
-     6/1/17
-     
-     each test will run and log the function name and true if passes
-     or function name and false if fails
-     */
+}();
+
+testProcess().init();
 
 /***/ })
 /******/ ]);

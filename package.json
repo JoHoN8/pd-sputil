@@ -1,6 +1,6 @@
 {
   "name": "pd-sputil",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "main": "src/library.js",
   "scripts": {
     "devServer": "webpack-dev-server --env dev",

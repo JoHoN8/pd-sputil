@@ -1,7 +1,7 @@
 /**
     app name sputil
  */
-import * as $ from 'jquery';
+var $ = require('jquery');
 
 const processRow = function (row) {
     var finalVal = '';
@@ -21,6 +21,28 @@ const processRow = function (row) {
     }
     return finalVal + '\r\n';
 };
+const ready = function(obj) {
+    if (!obj.readyFired) {
+        // this must be set to true before we start calling callbacks
+        obj.readyFired = true;
+        for (var i = 0; i < obj.readyList.length; i++) {
+            // if a callback here happens to add new ready handlers,
+            // the docReady() function will see that it already fired
+            // and will schedule the callback to run right after
+            // this event loop finishes so all handlers will still execute
+            // in order and no new ones will be added to the readyList
+            // while we are processing the list
+            obj.readyList[i].fn.call(window, obj.readyList[i].ctx);
+        }
+        obj.readyList = [];
+    }
+};
+
+const readyStateChange = function() {
+    if ( document.readyState === "complete" ) {
+        ready();
+    }
+};
 export const profileProps = ['PreferredName','SPS-JobTitle','WorkPhone','OfficeNumber',
     'WorkEmail','doeaSpecialAccount','SPS-Department','AccountName','SPS-Location',
     'PositionID','Manager','Office', "LastName", "FirstName"];
@@ -30,6 +52,55 @@ export function spSaveForm(formId, saveButtonValue) {
     if (formId && SPClientForms.ClientFormManager.SubmitClientForm(formId)) {return false;}
     WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(saveButtonValue, "", true, "", "", false, true));
 }
+export function domReady(callback, context) {
+    
+    let obj = {
+        readyList: [],
+        readyFired: false,
+        readyEventHandlersInstalled: false
+    };
+
+    if (typeof callback !== "function") {
+        throw new TypeError("callback for docReady(fn) must be a function");
+    }
+    // if ready has already fired, then just schedule the callback
+    // to fire asynchronously, but right away
+    if (obj.readyFired) {
+        setTimeout(() => {
+            callback(context);
+        }, 1);
+        return;
+    } else {
+        // add the function and context to the list
+        obj.readyList.push({fn: callback, ctx: context});
+    }
+    // if document already ready to go, schedule the ready function to run
+    // IE only safe when readyState is "complete", others safe when readyState is "interactive"
+    if (document.readyState === "complete" || (!document.attachEvent && document.readyState === "interactive")) {
+        setTimeout(() => {
+            ready(obj);
+        }, 1);
+    } else if (!obj.readyEventHandlersInstalled) {
+        // otherwise if we don't have event handlers installed, install them
+        if (document.addEventListener) {
+            // first choice is DOMContentLoaded event
+            document.addEventListener("DOMContentLoaded", () => {
+                ready(obj);
+            }, false);
+            // backup is window load event
+            window.addEventListener("load", () => {
+                ready(obj);
+            }, false);
+        } else {
+            // must be IE
+            document.attachEvent("onreadystatechange", readyStateChange);
+            window.attachEvent("onload", () => {
+                ready(obj);
+            });
+        }
+        obj.readyEventHandlersInstalled = true;
+    }
+} 
 export function getDataType(item) {
 
 	return Object.prototype.toString.call(item).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
@@ -194,7 +265,7 @@ export function exportToCSV(filename, rows) {
 }
 export function getPageInfo() {
     
-    return _spPageContextInfo;
+    return window._spPageContextInfo;
 }
 export function spGotoUrl(url) {
 
