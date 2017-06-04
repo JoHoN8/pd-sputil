@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jquery"));
+		module.exports = factory(require("jQuery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["jquery"], factory);
+		define(["jQuery"], factory);
 	else if(typeof exports === 'object')
-		exports["pdsputil"] = factory(require("jquery"));
+		exports["pdsputil"] = factory(require("jQuery"));
 	else
-		root["pdsputil"] = factory(root["$"]);
+		root["pdsputil"] = factory(root["jQuery"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -92,14 +92,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sublish = exports.sesStorage = exports.profileProps = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         app name sputil
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.spSaveForm = spSaveForm;
+exports.domReady = domReady;
 exports.getDataType = getDataType;
 exports.elementTagName = elementTagName;
 exports.argsConverter = argsConverter;
@@ -118,13 +115,12 @@ exports.waitForScriptsReady = waitForScriptsReady;
 exports.tableRowLoop = tableRowLoop;
 exports.loadSPScript = loadSPScript;
 
-var _jquery = __webpack_require__(0);
-
-var $ = _interopRequireWildcard(_jquery);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+    app name sputil
+ */
+var $ = __webpack_require__(0);
 
 var processRow = function processRow(row) {
     var finalVal = '';
@@ -144,6 +140,28 @@ var processRow = function processRow(row) {
     }
     return finalVal + '\r\n';
 };
+var ready = function ready(obj) {
+    if (!obj.readyFired) {
+        // this must be set to true before we start calling callbacks
+        obj.readyFired = true;
+        for (var i = 0; i < obj.readyList.length; i++) {
+            // if a callback here happens to add new ready handlers,
+            // the docReady() function will see that it already fired
+            // and will schedule the callback to run right after
+            // this event loop finishes so all handlers will still execute
+            // in order and no new ones will be added to the readyList
+            // while we are processing the list
+            obj.readyList[i].fn.call(window, obj.readyList[i].ctx);
+        }
+        obj.readyList = [];
+    }
+};
+
+var readyStateChange = function readyStateChange() {
+    if (document.readyState === "complete") {
+        ready();
+    }
+};
 var profileProps = exports.profileProps = ['PreferredName', 'SPS-JobTitle', 'WorkPhone', 'OfficeNumber', 'WorkEmail', 'doeaSpecialAccount', 'SPS-Department', 'AccountName', 'SPS-Location', 'PositionID', 'Manager', 'Office', "LastName", "FirstName"];
 
 function spSaveForm(formId, saveButtonValue) {
@@ -154,6 +172,55 @@ function spSaveForm(formId, saveButtonValue) {
         return false;
     }
     WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(saveButtonValue, "", true, "", "", false, true));
+}
+function domReady(callback, context) {
+
+    var obj = {
+        readyList: [],
+        readyFired: false,
+        readyEventHandlersInstalled: false
+    };
+
+    if (typeof callback !== "function") {
+        throw new TypeError("callback for docReady(fn) must be a function");
+    }
+    // if ready has already fired, then just schedule the callback
+    // to fire asynchronously, but right away
+    if (obj.readyFired) {
+        setTimeout(function () {
+            callback(context);
+        }, 1);
+        return;
+    } else {
+        // add the function and context to the list
+        obj.readyList.push({ fn: callback, ctx: context });
+    }
+    // if document already ready to go, schedule the ready function to run
+    // IE only safe when readyState is "complete", others safe when readyState is "interactive"
+    if (document.readyState === "complete" || !document.attachEvent && document.readyState === "interactive") {
+        setTimeout(function () {
+            ready(obj);
+        }, 1);
+    } else if (!obj.readyEventHandlersInstalled) {
+        // otherwise if we don't have event handlers installed, install them
+        if (document.addEventListener) {
+            // first choice is DOMContentLoaded event
+            document.addEventListener("DOMContentLoaded", function () {
+                ready(obj);
+            }, false);
+            // backup is window load event
+            window.addEventListener("load", function () {
+                ready(obj);
+            }, false);
+        } else {
+            // must be IE
+            document.attachEvent("onreadystatechange", readyStateChange);
+            window.attachEvent("onload", function () {
+                ready(obj);
+            });
+        }
+        obj.readyEventHandlersInstalled = true;
+    }
 }
 function getDataType(item) {
 
@@ -349,7 +416,7 @@ function exportToCSV(filename, rows) {
 }
 function getPageInfo() {
 
-    return _spPageContextInfo;
+    return window._spPageContextInfo;
 }
 function spGotoUrl(url) {
 
