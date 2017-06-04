@@ -1,7 +1,7 @@
 /**
     app name sputil
  */
-import * as $ from 'jquery';
+var $ = require('jquery');
 
 const processRow = function (row) {
     var finalVal = '';
