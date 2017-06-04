@@ -194,7 +194,9 @@ var testProcess = function () {
         },
         test_hideRibbon: function test_hideRibbon() {
 
-            spu.hideRibbon();
+            spu.domReady(function () {
+                spu.hideRibbon();
+            });
             return this;
         },
         test_URLparameters: function test_URLparameters() {

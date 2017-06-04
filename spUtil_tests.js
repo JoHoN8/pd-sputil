@@ -105,7 +105,9 @@ const testProcess = (function() {
         },
         test_hideRibbon: function() {
 
-            spu.hideRibbon();
+            spu.domReady(function() {
+                spu.hideRibbon();
+            });
             return this;
         },
         test_URLparameters: function() {
