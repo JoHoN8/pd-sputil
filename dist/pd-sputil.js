@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jquery"));
+		module.exports = factory(require("jQuery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["jquery"], factory);
+		define(["jQuery"], factory);
 	else if(typeof exports === 'object')
-		exports["pdsputil"] = factory(require("jquery"));
+		exports["pdsputil"] = factory(require("jQuery"));
 	else
-		root["pdsputil"] = factory(root["$"]);
+		root["pdsputil"] = factory(root["jQuery"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -92,12 +92,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.sublish = exports.sesStorage = exports.profileProps = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         app name sputil
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 exports.spSaveForm = spSaveForm;
 exports.getDataType = getDataType;
@@ -118,13 +114,12 @@ exports.waitForScriptsReady = waitForScriptsReady;
 exports.tableRowLoop = tableRowLoop;
 exports.loadSPScript = loadSPScript;
 
-var _jquery = __webpack_require__(0);
-
-var $ = _interopRequireWildcard(_jquery);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+    app name sputil
+ */
+var $ = __webpack_require__(0);
 
 var processRow = function processRow(row) {
     var finalVal = '';
