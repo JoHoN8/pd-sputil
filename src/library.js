@@ -265,7 +265,7 @@ export function exportToCSV(filename, rows) {
 }
 export function getPageInfo() {
     
-    return _spPageContextInfo;
+    return window._spPageContextInfo;
 }
 export function spGotoUrl(url) {
 

@@ -233,9 +233,9 @@ var testProcess = function () {
                 val = num;
             });
 
-            obj.publish('1', 33);
+            obj.publish('33', 70);
 
-            if (val === 33) {
+            if (val === 70) {
                 console.log("sublish", true);
             } else {
                 console.log("sublish", false);
@@ -268,8 +268,9 @@ var testProcess = function () {
 
             var self = this;
 
-            this.test_profileProps().test_getDataType().test_elementTagName().test_argsConverter("11", "22", "33").test_arrayInsertAtIndex().test_arrayRemoveAtIndex().test_encodeAccountName().test_getPageInfo().test_hideRibbon().test_URLparameters().test_sesStorage().test_sublish().test_waitForScriptsReady().then(function () {
+            this.test_profileProps().test_getDataType().test_elementTagName().test_argsConverter("11", "22", "33").test_arrayInsertAtIndex().test_arrayRemoveAtIndex().test_encodeAccountName().test_hideRibbon().test_URLparameters().test_sesStorage().test_sublish().test_waitForScriptsReady().then(function () {
                 self.test_loadSPScript();
+                self.test_getPageInfo();
             });
         }
     };

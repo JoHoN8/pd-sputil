@@ -416,7 +416,7 @@ function exportToCSV(filename, rows) {
 }
 function getPageInfo() {
 
-    return _spPageContextInfo;
+    return window._spPageContextInfo;
 }
 function spGotoUrl(url) {
 

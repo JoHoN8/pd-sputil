@@ -142,9 +142,9 @@ const testProcess = (function() {
 
             obj.subscribe('33', num => {val = num;});
 
-            obj.publish('1',33);
+            obj.publish('33',70);
 
-            if(val === 33) {
+            if(val === 70) {
                 console.log("sublish", true);
             } else {
                 console.log("sublish", false);
@@ -188,7 +188,6 @@ const testProcess = (function() {
             .test_arrayInsertAtIndex()
             .test_arrayRemoveAtIndex()
             .test_encodeAccountName()
-            .test_getPageInfo()
             .test_hideRibbon()
             .test_URLparameters()
             .test_sesStorage()
@@ -196,6 +195,7 @@ const testProcess = (function() {
             .test_waitForScriptsReady()
             .then(() => {
                 self.test_loadSPScript();
+                self.test_getPageInfo();
             });
         }
     }; 
