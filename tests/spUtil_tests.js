@@ -112,6 +112,7 @@ var testProcess = function () {
             if (type === true) {
                 console.log("profileProps", true);
             }
+            return this;
         },
         test_getDataType: function test_getDataType() {
 
@@ -123,6 +124,7 @@ var testProcess = function () {
             } else {
                 console.log("getDataType", false);
             }
+            return this;
         },
         test_elementTagName: function test_elementTagName() {
 
@@ -134,6 +136,7 @@ var testProcess = function () {
             } else {
                 console.log("elementTagName", false);
             }
+            return this;
         },
         test_argsConverter: function test_argsConverter() {
             var result = spu.argsConverter(arguments, 1);
@@ -143,6 +146,7 @@ var testProcess = function () {
             } else {
                 console.log("argsConverter", false);
             }
+            return this;
         },
         test_arrayInsertAtIndex: function test_arrayInsertAtIndex() {
 
@@ -154,6 +158,7 @@ var testProcess = function () {
             } else {
                 console.log("arrayInsertAtIndex", false);
             }
+            return this;
         },
         test_arrayRemoveAtIndex: function test_arrayRemoveAtIndex() {
 
@@ -165,6 +170,7 @@ var testProcess = function () {
             } else {
                 console.log("arrayRemoveAtIndex", false);
             }
+            return this;
         },
         test_encodeAccountName: function test_encodeAccountName() {
 
@@ -175,6 +181,7 @@ var testProcess = function () {
             } else {
                 console.log("encodeAccountName", false);
             }
+            return this;
         },
         test_getPageInfo: function test_getPageInfo() {
 
@@ -185,10 +192,12 @@ var testProcess = function () {
             } else {
                 console.log("getPageInfo", false);
             }
+            return this;
         },
         test_hideRibbon: function test_hideRibbon() {
 
             spu.hideRibbon();
+            return this;
         },
         test_URLparameters: function test_URLparameters() {
 
@@ -199,6 +208,7 @@ var testProcess = function () {
             } else {
                 console.log("urlParams", false);
             }
+            return this;
         },
         test_sesStorage: function test_sesStorage() {
 
@@ -212,6 +222,7 @@ var testProcess = function () {
             } else {
                 console.log("sessionStorage", false);
             }
+            return this;
         },
         test_sublish: function test_sublish() {
 
@@ -229,6 +240,7 @@ var testProcess = function () {
             } else {
                 console.log("sublish", false);
             }
+            return this;
         },
         test_waitForScriptsReady: function test_waitForScriptsReady() {
 
