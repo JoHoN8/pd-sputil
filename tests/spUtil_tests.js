@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = jQuery;
+module.exports = $;
 
 /***/ }),
 /* 1 */
