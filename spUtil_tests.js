@@ -20,6 +20,7 @@ const testProcess = (function() {
             if(type === true) {
                 console.log("profileProps", true);
             }
+            return this;
         },
         test_getDataType: function() {
 
@@ -31,6 +32,7 @@ const testProcess = (function() {
             } else {
                 console.log("getDataType", false);
             }
+            return this;
         },
         test_elementTagName: function() {
             
@@ -42,6 +44,7 @@ const testProcess = (function() {
             } else {
                 console.log("elementTagName", false);
             }
+            return this;
         },
         test_argsConverter: function() {
             let result = spu.argsConverter(arguments,1);
@@ -51,6 +54,7 @@ const testProcess = (function() {
             } else {
                 console.log("argsConverter", false);
             }
+            return this;
         },
         test_arrayInsertAtIndex: function() {
 
@@ -62,6 +66,7 @@ const testProcess = (function() {
             } else {
                 console.log("arrayInsertAtIndex", false);
             }
+            return this;
 
         },
         test_arrayRemoveAtIndex: function() {
@@ -74,6 +79,7 @@ const testProcess = (function() {
             } else {
                 console.log("arrayRemoveAtIndex", false);
             }
+            return this;
         },
         test_encodeAccountName: function() {
 
@@ -84,6 +90,7 @@ const testProcess = (function() {
             } else {
                 console.log("encodeAccountName", false);
             }
+            return this;
         },
         test_getPageInfo: function() {
 
@@ -94,10 +101,12 @@ const testProcess = (function() {
             } else {
                 console.log("getPageInfo", false);
             }
+            return this;
         },
         test_hideRibbon: function() {
 
             spu.hideRibbon();
+            return this;
         },
         test_URLparameters: function() {
 
@@ -108,6 +117,7 @@ const testProcess = (function() {
             } else {
                 console.log("urlParams", false);
             }
+            return this;
         },
         test_sesStorage: function() {
 
@@ -121,6 +131,7 @@ const testProcess = (function() {
             } else {
                 console.log("sessionStorage", false);
             }
+            return this;
         },
         test_sublish: function() {
 
@@ -136,6 +147,7 @@ const testProcess = (function() {
             } else {
                 console.log("sublish", false);
             }
+            return this;
         },
         test_waitForScriptsReady: function() {
 
@@ -146,6 +158,7 @@ const testProcess = (function() {
             }).fail(() => {
                 console.log("sessionStorage", false);
             });
+            
         },
         test_loadSPScript: function() {
 
