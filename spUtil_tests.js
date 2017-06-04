@@ -7,12 +7,12 @@ or function name and false if fails
 */
 
 import * as spu from './src/library.js';
-import * as jquery from 'jquery';
+// import * as jquery from 'jquery';
+var $ = require('jquery');
 
 jquery.noConflict();
 
 const testProcess = (function() {
-    var $ = jquery;
     var objProto = {
         test_profileProps: function() {
 
