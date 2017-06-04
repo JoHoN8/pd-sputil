@@ -34,7 +34,7 @@ if(env === 'test') {
         path: path.resolve(__dirname, "./tests"),
         filename: "spUtil_tests.js",
     };
-    external['./src/library.js'] = "library";
+    external['./src/library.js'] = "pdsputil";
 }
 
 module.exports = {
