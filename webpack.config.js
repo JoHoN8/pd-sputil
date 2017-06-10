@@ -8,10 +8,15 @@ let entryPoint = null;
 let plugins = [];
 let output = null;
 let external = {
-    "jquery": "jQuery"
+    "jquery": { 
+        commonjs: 'jquery', 
+        commonjs2: 'jquery', 
+        amd: 'jquery', 
+        root: '$' 
+    } 
 };
 
-if (env === 'dev' || env === 'build') {
+if (env === 'dev') {
     entryPoint = './src/library.js';
     output = {
         path: path.resolve(__dirname, "./dist"),
@@ -22,6 +27,13 @@ if (env === 'dev' || env === 'build') {
 }
 if(env === 'build') {
     plugins.push(new UglifyJsPlugin({ minimize: true }));
+    entryPoint = './src/library.js';
+    output = {
+        path: path.resolve(__dirname, "./dist"),
+        filename: `${packageData.name}.min.js`,
+        libraryTarget: 'umd',
+        library: 'pdsputil' //this will be the global variable to hook into
+    };
 }
 if(env === 'test') {
     entryPoint = './spUtil_tests.js';

@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jQuery"));
+		module.exports = factory(require("jquery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["jQuery"], factory);
+		define(["jquery"], factory);
 	else if(typeof exports === 'object')
-		exports["pdsputil"] = factory(require("jQuery"));
+		exports["pdsputil"] = factory(require("jquery"));
 	else
-		root["pdsputil"] = factory(root["jQuery"]);
+		root["pdsputil"] = factory(root["$"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -164,6 +164,12 @@ var readyStateChange = function readyStateChange() {
 };
 var profileProps = exports.profileProps = ['PreferredName', 'SPS-JobTitle', 'WorkPhone', 'OfficeNumber', 'WorkEmail', 'doeaSpecialAccount', 'SPS-Department', 'AccountName', 'SPS-Location', 'PositionID', 'Manager', 'Office', "LastName", "FirstName"];
 
+/**
+     * Saves SP out of the box form Dispform, Editform, Newform
+     * @param {string} [formId]
+     * @param {string} saveButtonValue
+     * @returns {void}
+*/
 function spSaveForm(formId, saveButtonValue) {
     if (!PreSaveItem()) {
         return false;
@@ -173,6 +179,13 @@ function spSaveForm(formId, saveButtonValue) {
     }
     WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(saveButtonValue, "", true, "", "", false, true));
 }
+/**
+     * Invokes the callback when dom is ready
+     * context is passed to the call back as first parameter
+     * @param {function} callback
+     * @param {object} context
+     * @returns {void}
+*/
 function domReady(callback, context) {
 
     var obj = {
@@ -222,10 +235,20 @@ function domReady(callback, context) {
         obj.readyEventHandlersInstalled = true;
     }
 }
+/**
+     * Return the javascript type in lowercase, ex array object
+     * @param {any} item
+     * @returns {string}
+*/
 function getDataType(item) {
 
     return Object.prototype.toString.call(item).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
 }
+/**
+     * Returns a lower case element tag name ex div
+     * @param {(JQuery|HTMLElement)} element
+     * @returns {string}
+*/
 function elementTagName(element) {
     var ele;
     if (element instanceof $) {
@@ -236,6 +259,12 @@ function elementTagName(element) {
 
     return ele.toLowerCase();
 }
+/**
+     * Takes a functions arguments and converts it to an array
+     * @param {any[]} args
+     * @param {number} startAt
+     * @returns {any[]}
+*/
 function argsConverter(args, startAt) {
     var giveBack = [],
         numberToStartAt,
@@ -245,16 +274,33 @@ function argsConverter(args, startAt) {
     }
     return giveBack;
 }
+/**
+     * Inserts an item or items starting at the passed index
+     * @param {any[]} array
+     * @param {number} index
+     * @returns {any[]}
+*/
 function arrayInsertAtIndex(array, index) {
     //all items past index will be inserted starting at index number
     var arrayToInsert = Array.prototype.splice.apply(arguments, [2]);
     Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert));
     return array;
 }
+/**
+     * Removes an item from index of the passed array
+     * @param {any[]} array
+     * @param {number} index
+     * @returns {any[]}
+*/
 function arrayRemoveAtIndex(array, index) {
     Array.prototype.splice.apply(array, [index, 1]);
     return array;
 }
+/**
+     * Adds the beginning string to an email and encodes it for url use
+     * @param {string} acctName
+     * @returns {string}
+*/
 function encodeAccountName(acctName) {
     var check = /^i:0\#\.f\|membership\|/,
         formattedName;
@@ -267,6 +313,11 @@ function encodeAccountName(acctName) {
 
     return encodeURIComponent(formattedName);
 }
+/**
+     * Returns a jquery promise that will resolve in the given time or default to 5 secs
+     * @param {number} time
+     * @returns {promise}
+*/
 function promiseDelay(time) {
     var def = $.Deferred(),
         amount = time || 5000;
@@ -276,9 +327,13 @@ function promiseDelay(time) {
     }, amount);
     return def.promise();
 }
+/**Class creates a new instance of sesStorage */
 
 var sesStorage = exports.sesStorage = function () {
     //frontEnd to session Storage
+    /**
+     * Create a new sesStorage
+    */
     function sesStorage() {
         _classCallCheck(this, sesStorage);
 
@@ -290,6 +345,12 @@ var sesStorage = exports.sesStorage = function () {
         value: function toType(obj) {
             return {}.toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
         }
+        /**
+             * Retrieves an item from session storage
+             * @param {string} key
+             * @returns {any}
+        */
+
     }, {
         key: 'getItem',
         value: function getItem(key) {
@@ -301,6 +362,13 @@ var sesStorage = exports.sesStorage = function () {
 
             return item;
         }
+        /**
+             * Stores an item from session storage
+             * @param {string} key
+             * @param {any} value
+             * @returns {any}
+        */
+
     }, {
         key: 'setItem',
         value: function setItem(key, value) {
@@ -312,6 +380,12 @@ var sesStorage = exports.sesStorage = function () {
 
             this.storageAdaptor.setItem(key, value);
         }
+        /**
+             * Removes an item from session storage
+             * @param {string} key
+             * @returns {void}
+        */
+
     }, {
         key: 'removeItem',
         value: function removeItem(key) {
@@ -321,28 +395,51 @@ var sesStorage = exports.sesStorage = function () {
 
     return sesStorage;
 }();
+/**Class creates a new pub sub object */
+
 
 var sublish = exports.sublish = function () {
+    /**
+         * Creates a new sublish
+    */
     function sublish() {
         _classCallCheck(this, sublish);
 
         this.cache = {};
     }
+    /**
+         * Publishes data to subscribers
+         * @param {string} id
+         * @returns {void}
+    */
+
 
     _createClass(sublish, [{
         key: 'publish',
         value: function publish(id) {
-            var args = argsConverter(arguments, 1),
-                ii,
-                total;
+            var ii, total;
             if (!this.cache[id]) {
                 this.cache[id] = [];
             }
             total = this.cache[id].length;
+
+            for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                args[_key - 1] = arguments[_key];
+            }
+
             for (ii = 0; ii < total; ii++) {
                 this.cache[id][ii].apply(this, args);
             }
         }
+        /**
+             * Subscribes a function to  an id
+             * for the fn the function will recieve whatever arguments are passed to publish
+             * so your parameters to the function should be whatever you are going to pass publish to the given id
+             * @param {string} id
+             * @param {function} fn
+             * @returns {void}
+        */
+
     }, {
         key: 'subscribe',
         value: function subscribe(id, fn) {
@@ -352,6 +449,14 @@ var sublish = exports.sublish = function () {
                 this.cache[id].push(fn);
             }
         }
+        /**
+             * Unsubscribes a function
+             * for the fn the function passed must be an exact reference to the function or it will not match
+             * @param {string} id
+             * @param {function} fn
+             * @returns {void}
+        */
+
     }, {
         key: 'unsubscribe',
         value: function unsubscribe(id, fn) {
@@ -366,6 +471,12 @@ var sublish = exports.sublish = function () {
                 }
             }
         }
+        /**
+             * Clears the internal cache so all subscribed function all be removed
+             * @param {string} id
+             * @returns {void}
+        */
+
     }, {
         key: 'clear',
         value: function clear(id) {
@@ -378,6 +489,13 @@ var sublish = exports.sublish = function () {
 
     return sublish;
 }();
+/**
+     * Creates a CSV file from the passed array
+     * @param {string} filename
+     * @param {string[][]} rows
+     * @returns {void}
+*/
+
 
 function exportToCSV(filename, rows) {
     /*
@@ -414,14 +532,29 @@ function exportToCSV(filename, rows) {
         }
     }
 }
+/**
+     * Returns the SP pageObj that is on all SP pages
+     * @returns {object}
+*/
 function getPageInfo() {
 
     return window._spPageContextInfo;
 }
+/**
+     * Navigates the user to the url passed
+     * @param {string} url
+     * @returns {void}
+*/
 function spGotoUrl(url) {
 
     STSNavigate(url);
 }
+/**
+     * Cleans the ajax search results to an array of objects
+     * @param {object[]} results
+     * @param {string[]} index
+     * @returns {object[]}
+*/
 function spSearchResultsCleaner(results, neededProps) {
     if (!neededProps) {
         // nothing to compare to
@@ -443,6 +576,10 @@ function spSearchResultsCleaner(results, neededProps) {
         return cleanProps;
     });
 }
+/**
+     * Lets the script know if the SP page is in edit mode
+     * @returns {boolean}
+*/
 function pageEditModeTest() {
 
     if ($('#MSOLayout_InDesignMode').val() === '1') {
@@ -451,6 +588,10 @@ function pageEditModeTest() {
         return true;
     }
 }
+/**
+     * Hides the ribbon at the top of an SP page
+     * @returns {void}
+*/
 function hideRibbon() {
 
     var ribbon = document.getElementById('s4-ribbonrow'),
@@ -479,10 +620,19 @@ var parse = function parse(params, pairs) {
 
     return pairs.length === 1 ? params : parse(params, pairs.slice(1));
 };
+/**
+     * Returns an object of the search properties in a url
+     * @returns {object}
+*/
 function URLparameters() {
     var parastring = location.search;
     return parastring.length === 0 ? {} : parse({}, parastring.substr(1).split('&'));
 }
+/**
+     * Returns a jquery promise that is resolved when the passed SP (only) script file is loaded
+     * @param {string} scriptName
+     * @returns {Promise}
+*/
 function waitForScriptsReady(scriptName) {
     var def = $.Deferred();
 
@@ -492,6 +642,12 @@ function waitForScriptsReady(scriptName) {
 
     return def.promise();
 }
+/**
+     * Loops through all rows of the passed table
+     * @param {JQuery} table
+     * @param {function(JQuery, number):any} cb
+     * @returns {void}
+*/
 function tableRowLoop(table, cb) {
     var rows = table.children('tbody').children('tr'),
         totalRows = rows.length,
@@ -506,6 +662,11 @@ function tableRowLoop(table, cb) {
         }
     }
 }
+/**
+     * Returns a jquery promise that resolves when the script file is loaded, any script file
+     * @param {string} fileName
+     * @returns {Promise}
+*/
 function loadSPScript(fileName) {
     //fileName example SP.Search.js
     return $.getScript('/_layouts/15/' + fileName);
