@@ -47,11 +47,25 @@ export const profileProps = ['PreferredName','SPS-JobTitle','WorkPhone','OfficeN
     'WorkEmail','doeaSpecialAccount','SPS-Department','AccountName','SPS-Location',
     'PositionID','Manager','Office', "LastName", "FirstName"];
 
+
+/**
+     * Saves SP out of the box form Dispform, Editform, Newform
+     * @param {string} [formId]
+     * @param {string} saveButtonValue
+     * @returns {void}
+*/
 export function spSaveForm(formId, saveButtonValue) {
     if (!PreSaveItem()) {return false;}
     if (formId && SPClientForms.ClientFormManager.SubmitClientForm(formId)) {return false;}
     WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(saveButtonValue, "", true, "", "", false, true));
 }
+/**
+     * Invokes the callback when dom is ready
+     * context is passed to the call back as first parameter
+     * @param {function} callback
+     * @param {object} context
+     * @returns {void}
+*/
 export function domReady(callback, context) {
     
     let obj = {
@@ -101,10 +115,20 @@ export function domReady(callback, context) {
         obj.readyEventHandlersInstalled = true;
     }
 } 
+/**
+     * Return the javascript type in lowercase, ex array object
+     * @param {any} item
+     * @returns {string}
+*/
 export function getDataType(item) {
 
 	return Object.prototype.toString.call(item).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
 }
+/**
+     * Returns a lower case element tag name ex div
+     * @param {(JQuery|HTMLElement)} element
+     * @returns {string}
+*/
 export function elementTagName(element) {
 	var ele;
 	if (element instanceof $) {
@@ -115,6 +139,12 @@ export function elementTagName(element) {
 
 	return ele.toLowerCase();
 }
+/**
+     * Takes a functions arguments and converts it to an array
+     * @param {any[]} args
+     * @param {number} startAt
+     * @returns {any[]}
+*/
 export function argsConverter(args, startAt) {
 	var giveBack = [],
 		numberToStartAt,
@@ -124,16 +154,33 @@ export function argsConverter(args, startAt) {
 	  }
 	  return giveBack;
 }
+/**
+     * Inserts an item or items starting at the passed index
+     * @param {any[]} array
+     * @param {number} index
+     * @returns {any[]}
+*/
 export function arrayInsertAtIndex(array, index) {
 	//all items past index will be inserted starting at index number
 	var arrayToInsert = Array.prototype.splice.apply(arguments, [2]);
 	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert));
 	return array;
 }
+/**
+     * Removes an item from index of the passed array
+     * @param {any[]} array
+     * @param {number} index
+     * @returns {any[]}
+*/
 export function arrayRemoveAtIndex(array, index) {
 	Array.prototype.splice.apply(array, [index, 1]);
 	return array;
 }
+/**
+     * Adds the beginning string to an email and encodes it for url use
+     * @param {string} acctName
+     * @returns {string}
+*/
 export function encodeAccountName(acctName) {
 	var check = /^i:0\#\.f\|membership\|/,
 		formattedName;
@@ -146,6 +193,11 @@ export function encodeAccountName(acctName) {
 
 	return encodeURIComponent(formattedName);
 }
+/**
+     * Returns a jquery promise that will resolve in the given time or default to 5 secs
+     * @param {number} time
+     * @returns {promise}
+*/
 export function promiseDelay(time) {
 	var def = $.Deferred(),
 		amount = time || 5000;
@@ -155,14 +207,23 @@ export function promiseDelay(time) {
 	}, amount);
 	return def.promise();
 }
+/**Class creates a new instance of sesStorage */
 export class sesStorage {
 	//frontEnd to session Storage
+    /**
+     * Create a new sesStorage
+    */
     constructor() {
         this.storageAdaptor = sessionStorage;
     }
 	toType(obj) {
 		return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
 	}
+    /**
+         * Retrieves an item from session storage
+         * @param {string} key
+         * @returns {any}
+    */
 	getItem(key) {
 		var item = this.storageAdaptor.getItem(key);
 
@@ -172,6 +233,12 @@ export class sesStorage {
 
 		return item;
 	}
+    /**
+         * Stores an item from session storage
+         * @param {string} key
+         * @param {any} value
+         * @returns {any}
+    */
 	setItem(key, value) {
 		var type = this.toType(value);
 
@@ -181,17 +248,30 @@ export class sesStorage {
 
 		this.storageAdaptor.setItem(key, value);
 	}
+    /**
+         * Removes an item from session storage
+         * @param {string} key
+         * @returns {void}
+    */
 	removeItem(key) {
 		this.storageAdaptor.removeItem(key);
 	}
 }
+/**Class creates a new pub sub object */
 export class sublish {
+    /**
+         * Creates a new sublish
+    */
     constructor() {
         this.cache = {};
     }
-    publish(id) {
-        var args = argsConverter(arguments, 1),
-            ii,
+    /**
+         * Publishes data to subscribers
+         * @param {string} id
+         * @returns {void}
+    */
+    publish(id, ...args) {
+        var ii,
             total;
         if (!this.cache[id]) {
             this.cache[id] = [];
@@ -202,6 +282,14 @@ export class sublish {
         }
 
     }
+    /**
+         * Subscribes a function to  an id
+         * for the fn the function will recieve whatever arguments are passed to publish
+         * so your parameters to the function should be whatever you are going to pass publish to the given id
+         * @param {string} id
+         * @param {function} fn
+         * @returns {void}
+    */
     subscribe(id, fn) {
         if (!this.cache[id]) {
             this.cache[id] = [fn];
@@ -209,6 +297,13 @@ export class sublish {
             this.cache[id].push(fn);
         }
     }
+    /**
+         * Unsubscribes a function
+         * for the fn the function passed must be an exact reference to the function or it will not match
+         * @param {string} id
+         * @param {function} fn
+         * @returns {void}
+    */
     unsubscribe(id, fn) {
         var ii,
             total;
@@ -222,6 +317,11 @@ export class sublish {
             }
         }
     }
+    /**
+         * Clears the internal cache so all subscribed function all be removed
+         * @param {string} id
+         * @returns {void}
+    */
     clear(id) {
         if (!this.cache[id]) {
             return;
@@ -229,6 +329,12 @@ export class sublish {
         this.cache[id] = [];
     }
 }
+/**
+     * Creates a CSV file from the passed array
+     * @param {string} filename
+     * @param {string[][]} rows
+     * @returns {void}
+*/
 export function exportToCSV(filename, rows) {
     /*
         rows should be
@@ -263,14 +369,29 @@ export function exportToCSV(filename, rows) {
         }
     }
 }
+/**
+     * Returns the SP pageObj that is on all SP pages
+     * @returns {object}
+*/
 export function getPageInfo() {
     
     return window._spPageContextInfo;
 }
+/**
+     * Navigates the user to the url passed
+     * @param {string} url
+     * @returns {void}
+*/
 export function spGotoUrl(url) {
 
     STSNavigate(url);
 }
+/**
+     * Cleans the ajax search results to an array of objects
+     * @param {object[]} results
+     * @param {string[]} index
+     * @returns {object[]}
+*/
 export function spSearchResultsCleaner(results, neededProps) {
     if (!neededProps) {
         // nothing to compare to
@@ -292,6 +413,10 @@ export function spSearchResultsCleaner(results, neededProps) {
         return cleanProps;
     });
 }
+/**
+     * Lets the script know if the SP page is in edit mode
+     * @returns {boolean}
+*/
 export function pageEditModeTest() {
 
     if ($('#MSOLayout_InDesignMode').val() === '1') {
@@ -300,6 +425,10 @@ export function pageEditModeTest() {
         return true;
     }
 }
+/**
+     * Hides the ribbon at the top of an SP page
+     * @returns {void}
+*/
 export function hideRibbon() {
     
     let ribbon = document.getElementById('s4-ribbonrow'),
@@ -328,10 +457,19 @@ const parse = function(params, pairs) {
 
     return pairs.length === 1 ? params : parse(params, pairs.slice(1));
 };
+/**
+     * Returns an object of the search properties in a url
+     * @returns {object}
+*/
 export function URLparameters() {
     let parastring = location.search;
     return parastring.length === 0 ? {} : parse({}, parastring.substr(1).split('&'));
 }
+/**
+     * Returns a jquery promise that is resolved when the passed SP (only) script file is loaded
+     * @param {string} scriptName
+     * @returns {Promise}
+*/
 export function waitForScriptsReady(scriptName) {
     var def = $.Deferred();
 
@@ -341,6 +479,12 @@ export function waitForScriptsReady(scriptName) {
 
     return def.promise();
 }
+/**
+     * Loops through all rows of the passed table
+     * @param {JQuery} table
+     * @param {function(JQuery, number):any} cb
+     * @returns {void}
+*/
 export function tableRowLoop(table, cb) {
 	var rows = table.children('tbody').children('tr'),
 		totalRows = rows.length,
@@ -355,6 +499,11 @@ export function tableRowLoop(table, cb) {
 		}
 	}
 }
+/**
+     * Returns a jquery promise that resolves when the script file is loaded, any script file
+     * @param {string} fileName
+     * @returns {Promise}
+*/
 export function loadSPScript(fileName) {
     //fileName example SP.Search.js
     return $.getScript(`/_layouts/15/${fileName}`);
