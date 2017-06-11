@@ -42,6 +42,7 @@ if(env === 'test') {
         filename: "spUtil_tests.js",
     };
     external['./src/library.js'] = "pdsputil";
+    external.jquery = 'jquery';
 }
 
 module.exports = {
