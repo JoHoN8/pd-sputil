@@ -36,7 +36,7 @@ if(env === 'build') {
     };
 }
 if(env === 'test') {
-    entryPoint = './spUtil_tests.js';
+    entryPoint = './project_tests.js';
     output = {
         path: path.resolve(__dirname, "./tests"),
         filename: "spUtil_tests.js",
