@@ -507,4 +507,12 @@ export function tableRowLoop(table, cb) {
 export function loadSPScript(fileName) {
     //fileName example SP.Search.js
     return $.getScript(`/_layouts/15/${fileName}`);
-};
+}
+/**
+ * Test a string to ensure it is a valid guid
+ * @param {string} guid 
+ */
+export function validGuid(guid) {
+    var a = /^[{|\\(]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[\\)|}]?$/;
+    return a.test(guid);
+}
