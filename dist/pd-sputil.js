@@ -114,6 +114,7 @@ exports.URLparameters = URLparameters;
 exports.waitForScriptsReady = waitForScriptsReady;
 exports.tableRowLoop = tableRowLoop;
 exports.loadSPScript = loadSPScript;
+exports.validGuid = validGuid;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -670,9 +671,16 @@ function tableRowLoop(table, cb) {
 function loadSPScript(fileName) {
     //fileName example SP.Search.js
     return $.getScript('/_layouts/15/' + fileName);
-};
+}
+/**
+ * Test a string to ensure it is a valid guid
+ * @param {string} guid 
+ */
+function validGuid(guid) {
+    var a = /^[{|\\(]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[\\)|}]?$/;
+    return a.test(guid);
+}
 
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=pd-sputil.js.map
