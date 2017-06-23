@@ -163,7 +163,6 @@ var readyStateChange = function readyStateChange() {
         ready();
     }
 };
-var profileProps = exports.profileProps = ['PreferredName', 'SPS-JobTitle', 'WorkPhone', 'OfficeNumber', 'WorkEmail', 'doeaSpecialAccount', 'SPS-Department', 'AccountName', 'SPS-Location', 'PositionID', 'Manager', 'Office', "LastName", "FirstName"];
 
 /**
      * Saves SP out of the box form Dispform, Editform, Newform

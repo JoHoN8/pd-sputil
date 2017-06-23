@@ -43,9 +43,6 @@ const readyStateChange = function() {
         ready();
     }
 };
-export const profileProps = ['PreferredName','SPS-JobTitle','WorkPhone','OfficeNumber',
-    'WorkEmail','doeaSpecialAccount','SPS-Department','AccountName','SPS-Location',
-    'PositionID','Manager','Office', "LastName", "FirstName"];
 
 
 /**
