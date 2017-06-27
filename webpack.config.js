@@ -4,19 +4,12 @@ const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const packageData = require("./package.json");
 const env  = require('yargs').argv.env;
 
-let entryPoint = null;
+let entryPoint = './src/library.js';
 let plugins = [];
 let output = null;
-let external = {
-    "jquery": { 
-        commonjs: 'jquery', 
-        commonjs2: 'jquery', 
-        amd: 'jquery', 
-        root: '$' 
-    } 
-};
+let external = {};
 
-if (env === 'dev') {
+if (env === 'dev' || env === 'build') {
     entryPoint = './src/library.js';
     output = {
         path: path.resolve(__dirname, "./dist"),
@@ -24,16 +17,17 @@ if (env === 'dev') {
         libraryTarget: 'umd',
         library: 'pdsputil' //this will be the global variable to hook into
     };
+
+    external.jquery = {
+        commonjs: 'jquery',
+        commonjs2: 'jquery',
+        amd: 'jquery',
+        root: '$'
+    };
 }
 if(env === 'build') {
+    output.filename = `${packageData.name}.min.js`;
     plugins.push(new UglifyJsPlugin({ minimize: true }));
-    entryPoint = './src/library.js';
-    output = {
-        path: path.resolve(__dirname, "./dist"),
-        filename: `${packageData.name}.min.js`,
-        libraryTarget: 'umd',
-        library: 'pdsputil' //this will be the global variable to hook into
-    };
 }
 if(env === 'test') {
     entryPoint = './project_tests.js';
@@ -41,8 +35,6 @@ if(env === 'test') {
         path: path.resolve(__dirname, "./tests"),
         filename: "spUtil_tests.js",
     };
-    external['./src/library.js'] = "pdsputil";
-    external.jquery = 'jQuery';
 }
 
 module.exports = {
@@ -56,7 +48,9 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['es2015']
+                        presets: [
+                             ['es2015', {modules: false}]
+                        ]
                     }
                 }
             }
@@ -66,3 +60,4 @@ module.exports = {
     externals: external,
     //devtool: 'source-map'
 };
+
