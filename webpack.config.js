@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const packageData = require("./package.json");
 const env  = require('yargs').argv.env;
 
@@ -27,7 +26,12 @@ if (env === 'dev' || env === 'build') {
 }
 if(env === 'build') {
     output.filename = `${packageData.name}.min.js`;
-    plugins.push(new UglifyJsPlugin({ minimize: true }));
+
+    const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+    let prodTrigger = new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    });
+    plugins.push(prodTrigger, new UglifyJsPlugin());
 }
 if(env === 'test') {
     entryPoint = './project_tests.js';

@@ -84,37 +84,34 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["spSaveForm"] = spSaveForm;
+/* harmony export (immutable) */ __webpack_exports__["domReady"] = domReady;
+/* harmony export (immutable) */ __webpack_exports__["getDataType"] = getDataType;
+/* harmony export (immutable) */ __webpack_exports__["elementTagName"] = elementTagName;
+/* harmony export (immutable) */ __webpack_exports__["argsConverter"] = argsConverter;
+/* harmony export (immutable) */ __webpack_exports__["arrayInsertAtIndex"] = arrayInsertAtIndex;
+/* harmony export (immutable) */ __webpack_exports__["arrayRemoveAtIndex"] = arrayRemoveAtIndex;
+/* harmony export (immutable) */ __webpack_exports__["encodeAccountName"] = encodeAccountName;
+/* harmony export (immutable) */ __webpack_exports__["promiseDelay"] = promiseDelay;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sesStorage", function() { return sesStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sublish", function() { return sublish; });
+/* harmony export (immutable) */ __webpack_exports__["exportToCSV"] = exportToCSV;
+/* harmony export (immutable) */ __webpack_exports__["getPageInfo"] = getPageInfo;
+/* harmony export (immutable) */ __webpack_exports__["spGotoUrl"] = spGotoUrl;
+/* harmony export (immutable) */ __webpack_exports__["spSearchResultsCleaner"] = spSearchResultsCleaner;
+/* harmony export (immutable) */ __webpack_exports__["pageEditModeTest"] = pageEditModeTest;
+/* harmony export (immutable) */ __webpack_exports__["hideRibbon"] = hideRibbon;
+/* harmony export (immutable) */ __webpack_exports__["URLparameters"] = URLparameters;
+/* harmony export (immutable) */ __webpack_exports__["waitForScriptsReady"] = waitForScriptsReady;
+/* harmony export (immutable) */ __webpack_exports__["tableRowLoop"] = tableRowLoop;
+/* harmony export (immutable) */ __webpack_exports__["loadSPScript"] = loadSPScript;
+/* harmony export (immutable) */ __webpack_exports__["validGuid"] = validGuid;
+/* harmony export (immutable) */ __webpack_exports__["getURLOrigin"] = getURLOrigin;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.spSaveForm = spSaveForm;
-exports.domReady = domReady;
-exports.getDataType = getDataType;
-exports.elementTagName = elementTagName;
-exports.argsConverter = argsConverter;
-exports.arrayInsertAtIndex = arrayInsertAtIndex;
-exports.arrayRemoveAtIndex = arrayRemoveAtIndex;
-exports.encodeAccountName = encodeAccountName;
-exports.promiseDelay = promiseDelay;
-exports.exportToCSV = exportToCSV;
-exports.getPageInfo = getPageInfo;
-exports.spGotoUrl = spGotoUrl;
-exports.spSearchResultsCleaner = spSearchResultsCleaner;
-exports.pageEditModeTest = pageEditModeTest;
-exports.hideRibbon = hideRibbon;
-exports.URLparameters = URLparameters;
-exports.waitForScriptsReady = waitForScriptsReady;
-exports.tableRowLoop = tableRowLoop;
-exports.loadSPScript = loadSPScript;
-exports.validGuid = validGuid;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -328,8 +325,7 @@ function promiseDelay(time) {
     return def.promise();
 }
 /**Class creates a new instance of sesStorage */
-
-var sesStorage = exports.sesStorage = function () {
+var sesStorage = function () {
     //frontEnd to session Storage
     /**
      * Create a new sesStorage
@@ -396,9 +392,7 @@ var sesStorage = exports.sesStorage = function () {
     return sesStorage;
 }();
 /**Class creates a new pub sub object */
-
-
-var sublish = exports.sublish = function () {
+var sublish = function () {
     /**
          * Creates a new sublish
     */
@@ -495,8 +489,6 @@ var sublish = exports.sublish = function () {
      * @param {string[][]} rows
      * @returns {void}
 */
-
-
 function exportToCSV(filename, rows) {
     /*
         rows should be
@@ -679,6 +671,18 @@ function validGuid(guid) {
     var a = /^[{|\\(]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[\\)|}]?$/;
     return a.test(guid);
 }
+/**
+     * Returns the origin of the current site
+     * @returns {string}
+*/
+function getURLOrigin() {
+    var win = window.location;
+
+    if (!win.origin) {
+        win.origin = win.protocol + "//" + win.hostname + (win.port ? ':' + win.port : '');
+    }
+    return win.origin;
+};
 
 /***/ })
 /******/ ]);

@@ -513,3 +513,17 @@ export function validGuid(guid) {
     var a = /^[{|\\(]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[\\)|}]?$/;
     return a.test(guid);
 }
+/**
+     * Returns the origin of the current site
+     * @returns {string}
+*/
+export function getURLOrigin() {
+    let win = window.location;
+ 
+    if (!win.origin) {
+        win.origin = win.protocol + "//"
+            + win.hostname
+            + (win.port ? ':' + win.port : '');
+    }
+    return win.origin;
+};
