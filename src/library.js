@@ -511,19 +511,18 @@ export function tableRowLoop(table, cb) {
      * @returns {Promise}
 */
 export function loadSPScript(fileName) {
-    return new Promise((resolve, reject) => {
-        var url,
+    var url,
+        pageInfo = getPageInfo(),
         ele = document.createElement( 'script' ),
-        fileUrl = "https://static.sharepointonline.com/bld/_layouts/15/16.0.6802.1209/";
+        fileUrl = `${pageInfo.siteAbsoluteUrl}/_layouts/15/`;
         //firstScriptTag = document.getElementsByTagName('script')[0];
 
-        url = fileUrl + fileName;
+    url = fileUrl + fileName;
 
-        ele.setAttribute( 'src', url );
-        ele.setAttribute('type', "text/javascript");
-        document.head.appendChild(ele);
-        resolve(true);
-    });
+    ele.setAttribute( 'src', url );
+    ele.setAttribute('type', "text/javascript");
+    document.head.appendChild(ele);
+    return waitForScriptsReady(fileName);
 }
 /**
  * Test a string to ensure it is a valid guid
