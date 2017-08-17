@@ -7,7 +7,7 @@
 		exports["pdsputil"] = factory(require("jquery"));
 	else
 		root["pdsputil"] = factory(root["$"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -43,9 +43,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -73,17 +70,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
-
-/***/ }),
-/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -118,7 +109,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
     app name sputil
  */
-var $ = __webpack_require__(0);
+var $ = __webpack_require__(1);
 
 var processRow = function processRow(row) {
     var finalVal = '';
@@ -160,6 +151,15 @@ var readyStateChange = function readyStateChange() {
         ready();
     }
 };
+var checkDep = function checkDep() {
+    try {
+        Promise;
+    } catch (error) {
+        throw new Error("Promise API is required for spUtil library, please polyfill Promise to continue.");
+    }
+};
+//this is to ensure need dependencies are present
+checkDep();
 
 /**
      * Saves SP out of the box form Dispform, Editform, Newform
@@ -311,18 +311,18 @@ function encodeAccountName(acctName) {
     return encodeURIComponent(formattedName);
 }
 /**
-     * Returns a jquery promise that will resolve in the given time or default to 5 secs
+     * Returns a promise that will resolve in the given time or default to 5 secs
      * @param {number} time
      * @returns {promise}
 */
 function promiseDelay(time) {
-    var def = $.Deferred(),
-        amount = time || 5000;
+    return new Promise(function (resolve, reject) {
+        var amount = time || 5000;
 
-    setTimeout(function () {
-        def.resolve();
-    }, amount);
-    return def.promise();
+        setTimeout(function () {
+            resolve(true);
+        }, amount);
+    });
 }
 /**Class creates a new instance of sesStorage */
 var sesStorage = function () {
@@ -621,18 +621,17 @@ function URLparameters() {
     return parastring.length === 0 ? {} : parse({}, parastring.substr(1).split('&'));
 }
 /**
-     * Returns a jquery promise that is resolved when the passed SP (only) script file is loaded
+     * Returns a promise that is resolved when the passed SP (only) script file is loaded
      * @param {string} scriptName
      * @returns {Promise}
 */
 function waitForScriptsReady(scriptName) {
-    var def = $.Deferred();
+    return new Promise(function (resolve, reject) {
 
-    ExecuteOrDelayUntilScriptLoaded(function () {
-        return def.resolve('Ready');
-    }, scriptName);
-
-    return def.promise();
+        ExecuteOrDelayUntilScriptLoaded(function () {
+            resolve(true);
+        }, scriptName);
+    });
 }
 /**
      * Loops through all rows of the passed table
@@ -655,13 +654,24 @@ function tableRowLoop(table, cb) {
     }
 }
 /**
-     * Returns a jquery promise that resolves when the script file is loaded, any script file
+     * Returns a promise that resolves when the script file is loaded, any script file
      * @param {string} fileName
      * @returns {Promise}
 */
 function loadSPScript(fileName) {
-    //fileName example SP.Search.js
-    return $.getScript('/_layouts/15/' + fileName);
+    return new Promise(function (resolve, reject) {
+        var url,
+            ele = document.createElement('script'),
+            fileUrl = "https://static.sharepointonline.com/bld/_layouts/15/16.0.6802.1209/";
+        //firstScriptTag = document.getElementsByTagName('script')[0];
+
+        url = fileUrl + fileName;
+
+        ele.setAttribute('src', url);
+        ele.setAttribute('type', "text/javascript");
+        document.head.appendChild(ele);
+        resolve(true);
+    });
 }
 /**
  * Test a string to ensure it is a valid guid
@@ -683,6 +693,12 @@ function getURLOrigin() {
     }
     return win.origin;
 };
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ })
 /******/ ]);

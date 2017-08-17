@@ -43,6 +43,15 @@ const readyStateChange = function() {
         ready();
     }
 };
+const checkDep = function() {
+    try {
+        Promise
+    } catch (error) {
+        throw new Error("Promise API is required for spUtil library, please polyfill Promise to continue.");
+    }
+};
+//this is to ensure need dependencies are present
+checkDep();
 
 
 /**
@@ -191,18 +200,18 @@ export function encodeAccountName(acctName) {
 	return encodeURIComponent(formattedName);
 }
 /**
-     * Returns a jquery promise that will resolve in the given time or default to 5 secs
+     * Returns a promise that will resolve in the given time or default to 5 secs
      * @param {number} time
      * @returns {promise}
 */
 export function promiseDelay(time) {
-	var def = $.Deferred(),
-		amount = time || 5000;
+    return new Promise((resolve, reject) => {
+        let amount = time || 5000;
 
-	setTimeout(function() {
-		def.resolve();
-	}, amount);
-	return def.promise();
+        setTimeout(function() {
+            resolve(true);
+        }, amount);
+    });
 }
 /**Class creates a new instance of sesStorage */
 export class sesStorage {
@@ -463,18 +472,18 @@ export function URLparameters() {
     return parastring.length === 0 ? {} : parse({}, parastring.substr(1).split('&'));
 }
 /**
-     * Returns a jquery promise that is resolved when the passed SP (only) script file is loaded
+     * Returns a promise that is resolved when the passed SP (only) script file is loaded
      * @param {string} scriptName
      * @returns {Promise}
 */
 export function waitForScriptsReady(scriptName) {
-    var def = $.Deferred();
+    return new Promise((resolve, reject) => {
 
-    ExecuteOrDelayUntilScriptLoaded(function() {
-        return def.resolve('Ready');
-    }, scriptName);
+        ExecuteOrDelayUntilScriptLoaded(function() {
+            resolve(true);
+        }, scriptName);
 
-    return def.promise();
+    });
 }
 /**
      * Loops through all rows of the passed table
@@ -497,13 +506,24 @@ export function tableRowLoop(table, cb) {
 	}
 }
 /**
-     * Returns a jquery promise that resolves when the script file is loaded, any script file
+     * Returns a promise that resolves when the script file is loaded, any script file
      * @param {string} fileName
      * @returns {Promise}
 */
 export function loadSPScript(fileName) {
-    //fileName example SP.Search.js
-    return $.getScript(`/_layouts/15/${fileName}`);
+    return new Promise((resolve, reject) => {
+        var url,
+        ele = document.createElement( 'script' ),
+        fileUrl = "https://static.sharepointonline.com/bld/_layouts/15/16.0.6802.1209/";
+        //firstScriptTag = document.getElementsByTagName('script')[0];
+
+        url = fileUrl + fileName;
+
+        ele.setAttribute( 'src', url );
+        ele.setAttribute('type', "text/javascript");
+        document.head.appendChild(ele);
+        resolve(true);
+    });
 }
 /**
  * Test a string to ensure it is a valid guid
