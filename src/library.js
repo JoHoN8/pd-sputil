@@ -1,5 +1,6 @@
 /**
-    app name sputil
+    Common utilities for working with SharePoint
+    @module pdsputil
  */
 var $ = require('jquery');
 
@@ -43,9 +44,10 @@ const readyStateChange = function() {
         ready();
     }
 };
+const guidHexCodes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
 const checkDep = function() {
     try {
-        Promise
+        var dep1 = Promise;
     } catch (error) {
         throw new Error("Promise API is required for spUtil library, please polyfill Promise to continue.");
     }
@@ -55,7 +57,7 @@ checkDep();
 
 
 /**
-     * Saves SP out of the box form Dispform, Editform, Newform
+     * Saves SP out of the box form Editform, Newform
      * @param {string} [formId]
      * @param {string} saveButtonValue
      * @returns {void}
@@ -68,12 +70,18 @@ export function spSaveForm(formId, saveButtonValue) {
 /**
      * Invokes the callback when dom is ready
      * context is passed to the call back as first parameter
-     * @param {function} callback
+     * @param {requestCallback} callback
      * @param {object} context
      * @returns {void}
 */
 export function domReady(callback, context) {
-    
+    /**
+     * Function that is called when the dom is ready
+     *
+     * @callback requestCallback
+     * @param {any} context
+     * @returns {void}
+     */
     let obj = {
         readyList: [],
         readyFired: false,
@@ -157,8 +165,8 @@ export function argsConverter(args, startAt) {
 		total = args.length;
 	for (numberToStartAt = startAt || 0; numberToStartAt < total; numberToStartAt++){
 		giveBack.push(args[numberToStartAt]);
-	  }
-	  return giveBack;
+	}
+	return giveBack;
 }
 /**
      * Inserts an item or items starting at the passed index
@@ -168,7 +176,7 @@ export function argsConverter(args, startAt) {
 */
 export function arrayInsertAtIndex(array, index) {
 	//all items past index will be inserted starting at index number
-	var arrayToInsert = Array.prototype.splice.apply(arguments, [2]);
+	var arrayToInsert = argsConverter(arguments, 2);
 	Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert));
 	return array;
 }
@@ -188,7 +196,7 @@ export function arrayRemoveAtIndex(array, index) {
      * @returns {string}
 */
 export function encodeAccountName(acctName) {
-	var check = /^i:0\#\.f\|membership\|/,
+	var check = /^i:0#\.f\|membership\|/,
 		formattedName;
 
 	if (check.test(acctName)) {
@@ -213,12 +221,11 @@ export function promiseDelay(time) {
         }, amount);
     });
 }
-/**Class creates a new instance of sesStorage */
+/**Class creates a new instance of sesStorage 
+ * 
+ * @class sesStorage
+*/
 export class sesStorage {
-	//frontEnd to session Storage
-    /**
-     * Create a new sesStorage
-    */
     constructor() {
         this.storageAdaptor = sessionStorage;
     }
@@ -263,17 +270,17 @@ export class sesStorage {
 		this.storageAdaptor.removeItem(key);
 	}
 }
-/**Class creates a new pub sub object */
-export class sublish {
-    /**
-         * Creates a new sublish
-    */
+/**Class creates a new pub sub object
+ * @class Sublish
+ */
+export class Sublish {
     constructor() {
         this.cache = {};
     }
     /**
          * Publishes data to subscribers
          * @param {string} id
+         * @param {...any} - all items passed in will be added as parameters of function with same id 
          * @returns {void}
     */
     publish(id, ...args) {
@@ -293,10 +300,17 @@ export class sublish {
          * for the fn the function will recieve whatever arguments are passed to publish
          * so your parameters to the function should be whatever you are going to pass publish to the given id
          * @param {string} id
-         * @param {function} fn
+         * @param {subscription} fn
          * @returns {void}
     */
     subscribe(id, fn) {
+        /**
+         * function typedef for callback to subscribe to an emitted event.
+         *
+         * @callback subscription
+         * @param {...any} - whatever you pass into publish will be passed in here
+         * @returns {void} responseMessage
+         */
         if (!this.cache[id]) {
             this.cache[id] = [fn];
         } else {
@@ -307,10 +321,17 @@ export class sublish {
          * Unsubscribes a function
          * for the fn the function passed must be an exact reference to the function or it will not match
          * @param {string} id
-         * @param {function} fn
+         * @param {unsub} fn
          * @returns {void}
     */
     unsubscribe(id, fn) {
+        /**
+         * This function is a identifier for matching so it can be removed.
+         *
+         * @callback unsub
+         * @param {...any} - whatever you pass into publish will be passed in here
+         * @returns {void} - responseMessage
+         */
         var ii,
             total;
         if (!this.cache[id]) {
@@ -343,6 +364,7 @@ export class sublish {
 */
 export function exportToCSV(filename, rows) {
     /*
+        todo fix, to use filesaver
         rows should be
         exportToCsv('export.csv', [
             ['name','description'],	
@@ -527,6 +549,7 @@ export function loadSPScript(fileName) {
 /**
  * Test a string to ensure it is a valid guid
  * @param {string} guid 
+ * @returns {boolean}
  */
 export function validGuid(guid) {
     var a = /^[{|\\(]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[\\)|}]?$/;
@@ -545,4 +568,35 @@ export function getURLOrigin() {
             + (win.port ? ':' + win.port : '');
     }
     return win.origin;
-};
+}
+/**
+ * Creates a SharePoint GUID in format
+ * xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 
+ * @returns {string}
+ */
+export function createGUID() {
+	var result = '';
+
+	for (var index = 0; index < 32; index++) {
+		var value = Math.floor(Math.random() * 16);
+
+		switch (index) {
+		case 8:
+			result += '-';
+			break;
+		case 12:
+			value = 4;
+			result += '-';
+			break;
+		case 16:
+			value = value & 3 | 8;
+			result += '-';
+			break;
+		case 20:
+			result += '-';
+			break;
+		}
+		result += guidHexCodes[value];
+	}
+	return result;
+}
