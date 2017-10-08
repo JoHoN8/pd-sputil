@@ -79,7 +79,7 @@ export function domReady(callback, context) {
      * Function that is called when the dom is ready
      *
      * @callback requestCallback
-     * @param {any} context
+     * @param {*} context
      * @returns {void}
      */
     let obj = {
@@ -131,7 +131,7 @@ export function domReady(callback, context) {
 } 
 /**
      * Return the javascript type in lowercase, ex array object
-     * @param {any} item
+     * @param {*} item
      * @returns {string}
 */
 export function getDataType(item) {
@@ -155,9 +155,9 @@ export function elementTagName(element) {
 }
 /**
      * Takes a functions arguments and converts it to an array
-     * @param {any[]} args
+     * @param {Array} args
      * @param {number} startAt
-     * @returns {any[]}
+     * @returns {Array}
 */
 export function argsConverter(args, startAt) {
 	var giveBack = [],
@@ -170,9 +170,9 @@ export function argsConverter(args, startAt) {
 }
 /**
      * Inserts an item or items starting at the passed index
-     * @param {any[]} array
+     * @param {Array} array
      * @param {number} index
-     * @returns {any[]}
+     * @returns {Array}
 */
 export function arrayInsertAtIndex(array, index) {
 	//all items past index will be inserted starting at index number
@@ -182,9 +182,9 @@ export function arrayInsertAtIndex(array, index) {
 }
 /**
      * Removes an item from index of the passed array
-     * @param {any[]} array
+     * @param {Array} array
      * @param {number} index
-     * @returns {any[]}
+     * @returns {Array}
 */
 export function arrayRemoveAtIndex(array, index) {
 	Array.prototype.splice.apply(array, [index, 1]);
@@ -235,7 +235,7 @@ export class sesStorage {
     /**
          * Retrieves an item from session storage
          * @param {string} key
-         * @returns {any}
+         * @returns {*}
     */
 	getItem(key) {
 		var item = this.storageAdaptor.getItem(key);
@@ -249,8 +249,8 @@ export class sesStorage {
     /**
          * Stores an item from session storage
          * @param {string} key
-         * @param {any} value
-         * @returns {any}
+         * @param {*} value
+         * @returns {void}
     */
 	setItem(key, value) {
 		var type = this.toType(value);
@@ -280,7 +280,7 @@ export class Sublish {
     /**
          * Publishes data to subscribers
          * @param {string} id
-         * @param {...any} - all items passed in will be added as parameters of function with same id 
+         * @param {...args} - all items passed in will be added as parameters of function with same id 
          * @returns {void}
     */
     publish(id, ...args) {
@@ -308,7 +308,7 @@ export class Sublish {
          * function typedef for callback to subscribe to an emitted event.
          *
          * @callback subscription
-         * @param {...any} - whatever you pass into publish will be passed in here
+         * @param {...args} - whatever you pass into publish will be passed in here
          * @returns {void} responseMessage
          */
         if (!this.cache[id]) {
@@ -329,7 +329,7 @@ export class Sublish {
          * This function is a identifier for matching so it can be removed.
          *
          * @callback unsub
-         * @param {...any} - whatever you pass into publish will be passed in here
+         * @param {...args} - whatever you pass into publish will be passed in here
          * @returns {void} - responseMessage
          */
         var ii,
@@ -417,7 +417,7 @@ export function spGotoUrl(url) {
 /**
      * Cleans the ajax search results to an array of objects
      * @param {object[]} results
-     * @param {string[]} index
+     * @param {string[]} neededProps
      * @returns {object[]}
 */
 export function spSearchResultsCleaner(results, neededProps) {
@@ -510,7 +510,7 @@ export function waitForScriptsReady(scriptName) {
 /**
      * Loops through all rows of the passed table
      * @param {JQuery} table
-     * @param {function(JQuery, number):any} cb
+     * @param {function(JQuery, number):*} cb
      * @returns {void}
 */
 export function tableRowLoop(table, cb) {
