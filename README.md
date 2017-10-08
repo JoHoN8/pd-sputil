@@ -10,15 +10,15 @@ Common utilities for working with SharePoint
         * [.domReady(callback, context)](#module_pdsputil.domReady) ⇒ <code>void</code>
         * [.getDataType(item)](#module_pdsputil.getDataType) ⇒ <code>string</code>
         * [.elementTagName(element)](#module_pdsputil.elementTagName) ⇒ <code>string</code>
-        * [.argsConverter(args, startAt)](#module_pdsputil.argsConverter) ⇒ <code>Array.&lt;any&gt;</code>
-        * [.arrayInsertAtIndex(array, index)](#module_pdsputil.arrayInsertAtIndex) ⇒ <code>Array.&lt;any&gt;</code>
-        * [.arrayRemoveAtIndex(array, index)](#module_pdsputil.arrayRemoveAtIndex) ⇒ <code>Array.&lt;any&gt;</code>
+        * [.argsConverter(args, startAt)](#module_pdsputil.argsConverter) ⇒ <code>Array</code>
+        * [.arrayInsertAtIndex(array, index)](#module_pdsputil.arrayInsertAtIndex) ⇒ <code>Array</code>
+        * [.arrayRemoveAtIndex(array, index)](#module_pdsputil.arrayRemoveAtIndex) ⇒ <code>Array</code>
         * [.encodeAccountName(acctName)](#module_pdsputil.encodeAccountName) ⇒ <code>string</code>
         * [.promiseDelay(time)](#module_pdsputil.promiseDelay) ⇒ <code>promise</code>
         * [.exportToCSV(filename, rows)](#module_pdsputil.exportToCSV) ⇒ <code>void</code>
         * [.getPageInfo()](#module_pdsputil.getPageInfo) ⇒ <code>object</code>
         * [.spGotoUrl(url)](#module_pdsputil.spGotoUrl) ⇒ <code>void</code>
-        * [.spSearchResultsCleaner(results, index)](#module_pdsputil.spSearchResultsCleaner) ⇒ <code>Array.&lt;object&gt;</code>
+        * [.spSearchResultsCleaner(results, neededProps)](#module_pdsputil.spSearchResultsCleaner) ⇒ <code>Array.&lt;object&gt;</code>
         * [.pageEditModeTest()](#module_pdsputil.pageEditModeTest) ⇒ <code>boolean</code>
         * [.hideRibbon()](#module_pdsputil.hideRibbon) ⇒ <code>void</code>
         * [.URLparameters()](#module_pdsputil.URLparameters) ⇒ <code>object</code>
@@ -31,8 +31,8 @@ Common utilities for working with SharePoint
     * _inner_
         * [~sesStorage](#module_pdsputil..sesStorage)
             * [new sesStorage()](#new_module_pdsputil..sesStorage_new)
-            * [.getItem(key)](#module_pdsputil..sesStorage+getItem) ⇒ <code>any</code>
-            * [.setItem(key, value)](#module_pdsputil..sesStorage+setItem) ⇒ <code>any</code>
+            * [.getItem(key)](#module_pdsputil..sesStorage+getItem) ⇒ <code>\*</code>
+            * [.setItem(key, value)](#module_pdsputil..sesStorage+setItem) ⇒ <code>void</code>
             * [.removeItem(key)](#module_pdsputil..sesStorage+removeItem) ⇒ <code>void</code>
         * [~Sublish](#module_pdsputil..Sublish)
             * [new Sublish()](#new_module_pdsputil..Sublish_new)
@@ -77,7 +77,7 @@ Return the javascript type in lowercase, ex array object
 
 | Param | Type |
 | --- | --- |
-| item | <code>any</code> | 
+| item | <code>\*</code> | 
 
 <a name="module_pdsputil.elementTagName"></a>
 
@@ -92,38 +92,38 @@ Returns a lower case element tag name ex div
 
 <a name="module_pdsputil.argsConverter"></a>
 
-### pdsputil.argsConverter(args, startAt) ⇒ <code>Array.&lt;any&gt;</code>
+### pdsputil.argsConverter(args, startAt) ⇒ <code>Array</code>
 Takes a functions arguments and converts it to an array
 
 **Kind**: static method of [<code>pdsputil</code>](#module_pdsputil)  
 
 | Param | Type |
 | --- | --- |
-| args | <code>Array.&lt;any&gt;</code> | 
+| args | <code>Array</code> | 
 | startAt | <code>number</code> | 
 
 <a name="module_pdsputil.arrayInsertAtIndex"></a>
 
-### pdsputil.arrayInsertAtIndex(array, index) ⇒ <code>Array.&lt;any&gt;</code>
+### pdsputil.arrayInsertAtIndex(array, index) ⇒ <code>Array</code>
 Inserts an item or items starting at the passed index
 
 **Kind**: static method of [<code>pdsputil</code>](#module_pdsputil)  
 
 | Param | Type |
 | --- | --- |
-| array | <code>Array.&lt;any&gt;</code> | 
+| array | <code>Array</code> | 
 | index | <code>number</code> | 
 
 <a name="module_pdsputil.arrayRemoveAtIndex"></a>
 
-### pdsputil.arrayRemoveAtIndex(array, index) ⇒ <code>Array.&lt;any&gt;</code>
+### pdsputil.arrayRemoveAtIndex(array, index) ⇒ <code>Array</code>
 Removes an item from index of the passed array
 
 **Kind**: static method of [<code>pdsputil</code>](#module_pdsputil)  
 
 | Param | Type |
 | --- | --- |
-| array | <code>Array.&lt;any&gt;</code> | 
+| array | <code>Array</code> | 
 | index | <code>number</code> | 
 
 <a name="module_pdsputil.encodeAccountName"></a>
@@ -179,7 +179,7 @@ Navigates the user to the url passed
 
 <a name="module_pdsputil.spSearchResultsCleaner"></a>
 
-### pdsputil.spSearchResultsCleaner(results, index) ⇒ <code>Array.&lt;object&gt;</code>
+### pdsputil.spSearchResultsCleaner(results, neededProps) ⇒ <code>Array.&lt;object&gt;</code>
 Cleans the ajax search results to an array of objects
 
 **Kind**: static method of [<code>pdsputil</code>](#module_pdsputil)  
@@ -187,7 +187,7 @@ Cleans the ajax search results to an array of objects
 | Param | Type |
 | --- | --- |
 | results | <code>Array.&lt;object&gt;</code> | 
-| index | <code>Array.&lt;string&gt;</code> | 
+| neededProps | <code>Array.&lt;string&gt;</code> | 
 
 <a name="module_pdsputil.pageEditModeTest"></a>
 
@@ -271,8 +271,8 @@ Creates a SharePoint GUID in formatxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 * [~sesStorage](#module_pdsputil..sesStorage)
     * [new sesStorage()](#new_module_pdsputil..sesStorage_new)
-    * [.getItem(key)](#module_pdsputil..sesStorage+getItem) ⇒ <code>any</code>
-    * [.setItem(key, value)](#module_pdsputil..sesStorage+setItem) ⇒ <code>any</code>
+    * [.getItem(key)](#module_pdsputil..sesStorage+getItem) ⇒ <code>\*</code>
+    * [.setItem(key, value)](#module_pdsputil..sesStorage+setItem) ⇒ <code>void</code>
     * [.removeItem(key)](#module_pdsputil..sesStorage+removeItem) ⇒ <code>void</code>
 
 <a name="new_module_pdsputil..sesStorage_new"></a>
@@ -282,7 +282,7 @@ Class creates a new instance of sesStorage
 
 <a name="module_pdsputil..sesStorage+getItem"></a>
 
-#### sesStorage.getItem(key) ⇒ <code>any</code>
+#### sesStorage.getItem(key) ⇒ <code>\*</code>
 Retrieves an item from session storage
 
 **Kind**: instance method of [<code>sesStorage</code>](#module_pdsputil..sesStorage)  
@@ -293,7 +293,7 @@ Retrieves an item from session storage
 
 <a name="module_pdsputil..sesStorage+setItem"></a>
 
-#### sesStorage.setItem(key, value) ⇒ <code>any</code>
+#### sesStorage.setItem(key, value) ⇒ <code>void</code>
 Stores an item from session storage
 
 **Kind**: instance method of [<code>sesStorage</code>](#module_pdsputil..sesStorage)  
@@ -301,7 +301,7 @@ Stores an item from session storage
 | Param | Type |
 | --- | --- |
 | key | <code>string</code> | 
-| value | <code>any</code> | 
+| value | <code>\*</code> | 
 
 <a name="module_pdsputil..sesStorage+removeItem"></a>
 
@@ -341,7 +341,7 @@ Publishes data to subscribers
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>string</code> |  |
-| ...args | <code>any</code> | all items passed in will be added as parameters of function with same id |
+| ...args | <code>args</code> | all items passed in will be added as parameters of function with same id |
 
 <a name="module_pdsputil..Sublish+subscribe"></a>
 
@@ -387,7 +387,7 @@ Function that is called when the dom is ready
 
 | Param | Type |
 | --- | --- |
-| context | <code>any</code> | 
+| context | <code>\*</code> | 
 
 <a name="module_pdsputil..subscription"></a>
 
@@ -399,7 +399,7 @@ function typedef for callback to subscribe to an emitted event.
 
 | Type | Description |
 | --- | --- |
-| <code>any</code> | whatever you pass into publish will be passed in here |
+| <code>args</code> | whatever you pass into publish will be passed in here |
 
 <a name="module_pdsputil..unsub"></a>
 
@@ -411,5 +411,5 @@ This function is a identifier for matching so it can be removed.
 
 | Type | Description |
 | --- | --- |
-| <code>any</code> | whatever you pass into publish will be passed in here |
+| <code>args</code> | whatever you pass into publish will be passed in here |
 

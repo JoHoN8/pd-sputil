@@ -1,6 +1,6 @@
 {
   "name": "pd-sputil",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "main": "src/library.js",
   "scripts": {
     "testFile": "webpack --config ./webpackConfigs/webpack.config.testing.js",
