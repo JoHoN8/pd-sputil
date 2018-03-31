@@ -29,7 +29,7 @@ interface anyOject {
 
 /*~ This example shows how to have multiple overloads for your function */
 export function spSaveForm(formId:string, saveButtonValue: string): void;
-export function domReady(callback:(context:any) => void, context: any): void;
+export function domReady(callback:(context:any) => void, context?: any): void;
 export function getDataType(item:any): string;
 export function elementTagName(elementTagName: JQuery|HTMLElement): string;
 export function argsConverter(args:any, startAt:number): any[];
